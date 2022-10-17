@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FreeCourse.Shared.Dtos
 {
-    internal class NoContent
+    public class NoContent
     {
     }
 }
