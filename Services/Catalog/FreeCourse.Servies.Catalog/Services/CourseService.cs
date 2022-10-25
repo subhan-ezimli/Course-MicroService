@@ -4,17 +4,18 @@ using FreeCourse.Servies.Catalog.Model;
 using FreeCourse.Servies.Catalog.Settings;
 using FreeCourse.Shared.Dtos;
 using MongoDB.Driver;
+using System.Transactions;
 
 namespace FreeCourse.Servies.Catalog.Services
 {
-    internal class CourseService:ICourseService
+    public class CourseService:ICourseService
     {
         private readonly IMongoCollection<Category> _categoryCollection;
 
         private readonly IMongoCollection<Course> _courseCollection;
         private readonly IMapper _mapper;
 
-        public CourseService(IMongoCollection<Course> courseyCollection, IMapper mapper, IDatabaseSettings databaseSettings, IMongoCollection<Category> categoryCollection)
+        public CourseService( IMapper mapper, IDatabaseSettings databaseSettings)
         {
 
             var client = new MongoClient(databaseSettings.ConnectionString);
@@ -22,7 +23,7 @@ namespace FreeCourse.Servies.Catalog.Services
 
             _courseCollection = database.GetCollection<Course>(databaseSettings.CourseCollectionName);
             _mapper = mapper;
-            _categoryCollection = categoryCollection;
+            _categoryCollection = database.GetCollection<Category>(databaseSettings.CategoryCollectionName); ;
         }
 
         public async Task<Response<List<CourseDto>>> GetAllAsync()
@@ -44,10 +45,15 @@ namespace FreeCourse.Servies.Catalog.Services
             return Response<List<CourseDto>>.Success(_mapper.Map<List<CourseDto>>(courses), 200);
         }
 
-        public async Task<Response<CourseDto>> CreateAsync(Course course)
+        public async Task<Response<CourseDto>> CreateAsync(CourseCreateDto  courseCreateDto)
         {
-            await _courseCollection.InsertOneAsync(course);
-            return Response<CourseDto>.Success(_mapper.Map<CourseDto>(course), 200);
+           
+                var newCourse = _mapper.Map<Course>(courseCreateDto);
+                newCourse.CreatedTime = DateTime.Now;
+                await _courseCollection.InsertOneAsync(newCourse);
+                return Response<CourseDto>.Success(_mapper.Map<CourseDto>(newCourse), 200);
+              
+            
         }
 
         public async Task<Response<CourseDto>> GetByIdAsync(string id)
@@ -81,13 +87,6 @@ namespace FreeCourse.Servies.Catalog.Services
             return Response<List<CourseDto>>.Success(_mapper.Map<List<CourseDto>>(courses), 200);
         }
 
-        public async Task<Response<CourseDto>> CreateAsync(CourseCreateDto courseCreateDto)
-        {
-
-            var newCourse = _mapper.Map<Course>(courseCreateDto);
-            newCourse.CreatedTime = DateTime.Now;
-            return Response<CourseDto>.Success(_mapper.Map<CourseDto>(newCourse), 200);
-        }
         public async Task<Response<NoContent>> UpdateAsync(CourseUpdateDto courseUpdateDto)
         {
             var updateCourse = _mapper.Map<Course>(courseUpdateDto);

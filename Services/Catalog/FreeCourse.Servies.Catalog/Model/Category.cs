@@ -2,7 +2,7 @@
 
 namespace FreeCourse.Servies.Catalog.Model
 {
-    internal class Category
+    public class Category
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]

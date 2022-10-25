@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<ICategoryService,CategoryService>();
+builder.Services.AddScoped<ICourseService,CourseService>();
 builder.Services.AddAutoMapper(typeof(GeneralMapping));
+
 builder.Services.AddControllers();
 
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));

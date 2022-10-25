@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution.Items", "Solution.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{26BC58F2-A69A-41EC-8B6C-FAB413395619}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeCourse.Shared", "Shared\FreeCourse.Shared\FreeCourse.Shared.csproj", "{57221F7B-BAD1-43E9-AF58-C1B8BC0B0BEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeCourse.Shared", "Shared\FreeCourse.Shared\FreeCourse.Shared.csproj", "{57221F7B-BAD1-43E9-AF58-C1B8BC0B0BEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,7 +39,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6B55D3EB-B358-42BE-817B-DF9896A47102} = {83AF4212-56E1-4270-80A4-F733172B1569}
 		{21C14A05-AC44-46B5-9FEF-DEA8915AB531} = {6B55D3EB-B358-42BE-817B-DF9896A47102}
-		{26BC58F2-A69A-41EC-8B6C-FAB413395619} = {83AF4212-56E1-4270-80A4-F733172B1569}
 		{57221F7B-BAD1-43E9-AF58-C1B8BC0B0BEF} = {26BC58F2-A69A-41EC-8B6C-FAB413395619}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

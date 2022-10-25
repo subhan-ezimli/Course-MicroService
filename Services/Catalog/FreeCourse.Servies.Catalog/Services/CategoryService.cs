@@ -2,20 +2,20 @@
 using FreeCourse.Servies.Catalog.Dtos;
 using FreeCourse.Servies.Catalog.Model;
 using FreeCourse.Servies.Catalog.Settings;
+using FreeCourse.Shared.ControllerBases;
 using FreeCourse.Shared.Dtos;
 using MongoDB.Driver;
 
 namespace FreeCourse.Servies.Catalog.Services
 {
-    internal class CategoryService:ICategoryService
+    public class CategoryService:ICategoryService
     {
 
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
 
-        public CategoryService(IMongoCollection<Category> categoryCollection, IMapper mapper, IDatabaseSettings databaseSettings)
+        public CategoryService( IMapper mapper, IDatabaseSettings databaseSettings)
         {
-
             var client = new MongoClient(databaseSettings.ConnectionString);
             var database = client.GetDatabase(databaseSettings.DatabaseName);
 
@@ -29,8 +29,9 @@ namespace FreeCourse.Servies.Catalog.Services
             return Response<List<CategoryDto>>.Success(_mapper.Map<List<CategoryDto>>(categories),200);
         }
 
-        public async Task<Response<CategoryDto>> CreateAsync(Category category)
+        public async Task<Response<CategoryDto>> CreateAsync(CategoryCreateDto categoryDto)
         {
+            var category=_mapper.Map<Category>(categoryDto);
            await _categoryCollection.InsertOneAsync(category);
             return Response<CategoryDto>.Success(_mapper.Map<CategoryDto>(category),200);
         }
